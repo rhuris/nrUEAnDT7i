@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 
 <head>
-	<title>Melhor jogo do universo!</title>
+	<title> Prototype 1 </title>
 </head>
 <body>
 
@@ -124,21 +124,8 @@ function leDoTeclado(evento) {
 document.onkeydown = leDoTeclado; 
 
 
-function saveGame(){
-    alert("Saved.");
-    localStorage['shittyInc_save'] = totalExp;
-}
 
-function loadGame() {
 
-    var save_data = localStorage['shittyInc_save']
-    alert("Loaded.");
-    console.log(save_data);
-    if (!save_data) return;
-    console.log(save_data);
-
-    totalExp = localStorage['shittyInc_save'];
-}
 
 nomeInimigo = 1;
 
@@ -163,7 +150,7 @@ function refresh() {
 	/* Fill text */
 	ctx.fillStyle = '#000000';
 	ctx.font = "30px Arial";
-	var text = 'Titan, o chabi do Oeste ' + Math.round(hatched) + '/' + Math.round(total);
+	var text = 'Player ' + Math.round(hatched) + '/' + Math.round(total);
 	ctx.fillText(text,225,35);
 
 
@@ -183,7 +170,7 @@ function refresh() {
 	/* Fill text */
 	ctxInimigo.fillStyle = '#000000';
 	ctxInimigo.font = "30px Arial";
-	var textInimigo = 'Inimigo Strengthned '+ nomeInimigo + ":    " + Math.round(hatchedInimigo) + '/' + Math.round(totalInimigo);
+	var textInimigo = 'Enemy '+ nomeInimigo + ":    " + Math.round(hatchedInimigo) + '/' + Math.round(totalInimigo);
 	ctxInimigo.fillText(textInimigo,195, 35);
 
 
@@ -236,7 +223,7 @@ function compraDano(x) {
 
 	} else { 
 
-		alert("Eiiée eiéee, não tem experiência! Pegadinha do malandro!");
+		alert("Not enough EXP");
 	}
 }
 
@@ -312,9 +299,9 @@ function dano(x) {
 function disable() {
         x=document.getElementById("create_button");
         x.disabled=true;
-        x.value="PELA CÓLERA DO DRAGÃO!";
+        x.value="Dragon's Punch!";
         setTimeout(enable, 5000);
-        ataqueJogadoro(7);
+        ataqueJogador(7);
         refresh();
     }
 
@@ -324,6 +311,41 @@ function enable() {
         x.value=" Ultimate ";
     }
 
+
+function saveGame(){
+	game.total = total; 
+	game.totalInimigo = totalInimigo;
+	game.totalExp = totalExp;
+	game.hatched = hatched;
+
+    alert("Saved.");
+    localStorage['shittyInc_save'] = btoa(JSON.stringify(game));
+}
+
+ function loadGame() {
+
+    var save_data = localStorage['shittyInc_save']
+    alert("Loaded.");
+    console.log(save_data);
+    if (!save_data) return;
+    console.log(save_data);
+
+    game = JSON.parse(atob(localStorage['shittyInc_save']))
+    total =  game.total;
+	totalInimigo = game.totalInimigo;
+	totalExp = game.totalExp;
+	hatched = game.hatched;
+
+}
+
+var game = {
+
+	total : 0,
+	totalInimigo : 0,	
+	totalExp : 0, 
+	hatched : 0 
+
+}
 
 
 
